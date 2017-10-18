@@ -6,11 +6,12 @@ let rec assignRemainder target remainders res =
     | true -> res
     | false ->
         let (maxKey, _) = remainders |> Seq.maxBy snd
-        let pre = res |> Seq.takeWhile (fun (k, _) -> k <> maxKey)
-        let post = res |> Seq.skipWhile (fun (k, _) -> k <> maxKey) |> Seq.skip 1
+        let notMaxKey (K, _) = K <> maxKey
+        let pre = res |> Seq.takeWhile notMaxKey
+        let post = res |> Seq.skipWhile notMaxKey |> Seq.skip 1
         let (_, currVal) = res |> Seq.find (fun (k, _) -> k = maxKey)
         let newItem = [(maxKey, currVal + 1)] |> Seq.ofList
-        assignRemainder target (remainders |> Seq.filter (fun (k, _) -> k <> maxKey))  (Seq.concat [|pre; newItem; post|])
+        assignRemainder target (remainders |> Seq.filter notMaxKey)  (Seq.concat [|pre; newItem; post|])
 
 let round items =
     let targetSum = items |> Seq.sumBy snd |> int
