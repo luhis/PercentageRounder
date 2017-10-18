@@ -112,6 +112,32 @@
             rounded.ElementAt(3).Item2.Should().Be(24);
         }
 
+        [Fact]
+        public void ShouldRoundSome()
+        {
+            var data = new List<Tuple<string, decimal>>()
+                           {
+                               Tuple.Create("Equities", 31.6220989654932m),
+                               Tuple.Create("Fixed Income", 55.8340786306896m),
+                               Tuple.Create("Alternatives", 2.88033373820556m),
+                               Tuple.Create("Cash", 9.66349214560435m),
+                           };
+
+            var rounded = Rounder.round(data);
+
+            rounded.Sum(a => a.Item2).Should().Be(100);
+
+            rounded.First().Item1.Should().Be("Equities");
+            rounded.ElementAt(1).Item1.Should().Be("Fixed Income");
+            rounded.ElementAt(2).Item1.Should().Be("Alternatives");
+            rounded.ElementAt(3).Item1.Should().Be("Cash");
+
+            rounded.First().Item2.Should().Be(31);
+            rounded.ElementAt(1).Item2.Should().Be(56);
+            rounded.ElementAt(2).Item2.Should().Be(3);
+            rounded.ElementAt(3).Item2.Should().Be(10);
+        }
+
         ////[Fact]
         ////public void ShouldRoundDouble()
         ////{
