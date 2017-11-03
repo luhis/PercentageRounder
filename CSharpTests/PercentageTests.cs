@@ -8,7 +8,7 @@
 
     using Xunit;
 
-    public class Tests
+    public class PercentageTests
     {
         [Fact]
         public void ShouldNotRound()
